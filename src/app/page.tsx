@@ -84,12 +84,17 @@ export default function Home() {
   const { translations, language, setLanguage } = useLanguage();
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const languageMenuRef = useRef<HTMLDivElement>(null);
+  const [isVehicleDropdownOpen, setIsVehicleDropdownOpen] = useState(false);
+  const vehicleDropdownRef = useRef<HTMLDivElement>(null);
 
-  // Fermer le menu si on clique en dehors
+  // Fermer les menus si on clique en dehors
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (languageMenuRef.current && !languageMenuRef.current.contains(event.target as Node)) {
         setIsLanguageMenuOpen(false);
+      }
+      if (vehicleDropdownRef.current && !vehicleDropdownRef.current.contains(event.target as Node)) {
+        setIsVehicleDropdownOpen(false);
       }
     }
 
@@ -106,7 +111,7 @@ export default function Home() {
     date: '',
     time: '',
     passengers: '',
-    vehicule: VEHICULES[0].key,
+    vehicule: '',
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -243,10 +248,9 @@ export default function Home() {
           <form onSubmit={handleSubmit} className="bg-white text-black p-6 rounded-lg shadow-lg w-full max-w-5xl space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('home.booking_form.departure')}
-                </label>
+               
                 <input
+                placeholder={t('home.booking_form.departure')}
                   type="text"
                   name="depart"
                   value={formData.depart}
@@ -256,10 +260,9 @@ export default function Home() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('home.booking_form.destination')}
-                </label>
+               
                 <input
+                  placeholder={t('home.booking_form.destination')}
                   type="text"
                   name="destination"
                   value={formData.destination}
@@ -272,10 +275,9 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('home.booking_form.date')}
-                </label>
+               
                 <input
+                  placeholder={t('home.booking_form.date')}
                   type="date"
                   name="date"
                   value={formData.date}
@@ -285,10 +287,9 @@ export default function Home() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('home.booking_form.time')}
-                </label>
+                
                 <input
+                  placeholder={t('home.booking_form.time')}
                   type="time"
                   name="time"
                   value={formData.time}
@@ -298,10 +299,9 @@ export default function Home() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {t('home.booking_form.passengers')}
-                </label>
+                
                 <input
+                  placeholder={t('home.booking_form.passengers')}
                   type="number"
                   name="passengers"
                   value={formData.passengers}
@@ -317,43 +317,87 @@ export default function Home() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 {t('home.booking_form.vehicle_type')}
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {VEHICULES.map(v => (
-                  <label key={v.key} className={`flex items-center border rounded-lg p-2 cursor-pointer transition-all duration-150 ${formData.vehicule === v.key ? 'ring-2 ring-yellow-500 bg-yellow-50' : 'bg-white'}`}>
-                    <input
-                      type="radio"
-                      name="vehicule"
-                      value={v.key}
-                      checked={formData.vehicule === v.key}
-                      onChange={() => handleVehiculeChange(v.key)}
-                      className="mr-2"
-                    />
-                    <div className="w-14 h-10 relative mr-2">
-                      <Image
-                        src={v.img}
-                        alt={t(`home.fleet.vehicles.${v.key}`)}
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <div>
-                      <div className="font-bold">
-                        {t(`home.fleet.vehicles.${v.key}`)}
-                      </div>
-                      <div className="text-xs text-gray-600">
-                        {v.seats} {t('home.fleet.seats')} · {v.luggage} {t('home.fleet.luggage')}
-                      </div>
-                    </div>
-                  </label>
-                ))}
+              
+              {/* Liste déroulante personnalisée avec images */}
+              <div className="relative" ref={vehicleDropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setIsVehicleDropdownOpen(!isVehicleDropdownOpen)}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500 bg-white text-left flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-2">
+                    {formData.vehicule ? (
+                      <>
+                        <div className="w-6 h-6 relative">
+                          <Image
+                            src={VEHICULES.find(v => v.key === formData.vehicule)?.img || ''}
+                            alt={t(`home.fleet.vehicles.${formData.vehicule}`)}
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                        <span>{t(`home.fleet.vehicles.${formData.vehicule}`)}</span>
+                      </>
+                    ) : (
+                      <span className="text-gray-500">{t('home.booking_form.vehicle_type')}</span>
+                    )}
+                  </div>
+                  <span className={`transform transition-transform duration-200 ${isVehicleDropdownOpen ? 'rotate-180' : ''}`}>
+                    ▼
+                  </span>
+                </button>
+                
+                {isVehicleDropdownOpen && (
+                  <div className="absolute z-50 w-full mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                    {VEHICULES.map(v => (
+                      <button
+                        key={v.key}
+                        type="button"
+                        onClick={() => {
+                          handleVehiculeChange(v.key);
+                          setIsVehicleDropdownOpen(false);
+                        }}
+                        className={`w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3 border-b last:border-b-0 ${
+                          formData.vehicule === v.key ? 'bg-yellow-50 border-yellow-200' : ''
+                        }`}
+                      >
+                        <div className="w-8 h-8 relative flex-shrink-0">
+                          <Image
+                            src={v.img}
+                            alt={t(`home.fleet.vehicles.${v.key}`)}
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                        <div>
+                          <div className="font-medium">
+                            {t(`home.fleet.vehicles.${v.key}`)}
+                          </div>
+                          <div className="text-xs text-gray-500">
+                            {v.seats} {t('home.fleet.seats')} · {v.luggage} {t('home.fleet.luggage')}
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
             <div className="text-center">
               <button
                 type="submit"
-                className="bg-yellow-500 text-white px-8 py-3 rounded-lg font-bold hover:bg-yellow-600 transition-colors"
+                className="bg-green-500 text-white px-8 py-3 rounded-lg font-bold hover:bg-yellow-600 transition-colors flex items-center gap-2 mx-auto"
               >
+                {/* Icône WhatsApp */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.516"/>
+                </svg>
                 {t('home.booking_form.book_now')}
               </button>
             </div>
