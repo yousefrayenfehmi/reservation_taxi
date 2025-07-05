@@ -277,7 +277,6 @@ export default function Home() {
               <div>
                
                 <input
-                  placeholder={t('home.booking_form.date')}
                   type="date"
                   name="date"
                   value={formData.date}
@@ -289,7 +288,6 @@ export default function Home() {
               <div>
                 
                 <input
-                  placeholder={t('home.booking_form.time')}
                   type="time"
                   name="time"
                   value={formData.time}
