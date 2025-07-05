@@ -9,21 +9,21 @@ const VEHICULES = [
   {
     key: 'economy',
     img: '/economy.png',
-    seats: 3,
-    luggage: 3,
+    seats: 4,
+    luggage: 4,
   },
   {
     key: 'comfort',
     img: '/confort.png',
-    seats: 3,
-    luggage: 3,
+    seats: 4,
+    luggage: 4,
   },
   
   {
     key: 'business',
     img: '/business.png',
-    seats: 3,
-    luggage: 3,
+    seats: 4,
+    luggage: 4,
   },
   {
     key: 'van',
