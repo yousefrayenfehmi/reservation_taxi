@@ -8,8 +8,8 @@ export const en = {
     },
     booking_form: {
       title: "Book your ride",
-      departure: "Departure location",
-      destination: "Destination",
+      departure: "Departure location ( address, station, airport, etc. )",
+      destination: "Destination ( address, station, airport, etc. )",
       date: "Date",
       time: "Time",
       passengers: "Number of passengers",

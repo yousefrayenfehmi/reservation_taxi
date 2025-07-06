@@ -8,8 +8,8 @@ export const fr = {
     },
     booking_form: {
       title: "Réservez votre trajet",
-      departure: "Lieu de départ",
-      destination: "Destination",
+      departure: "Lieu de départ ( adresse, gare, aéroport, etc. )",
+      destination: "Destination ( adresse, gare, aéroport, etc. )",
       date: "Date",
       time: "Heure",
       passengers: "Nombre de passagers",

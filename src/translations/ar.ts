@@ -8,8 +8,8 @@ export const ar = {
     },
     booking_form: {
       title: "احجز رحلتك",
-      departure: "مكان المغادرة",
-      destination: "الوجهة",
+      departure: "مكان المغادرة ( عنوان، محطة، مطار، إلخ. )",
+      destination: "الوجهة ( عنوان، محطة، مطار، إلخ. )",
       date: "التاريخ",
       time: "الوقت",
       passengers: "عدد الركاب",

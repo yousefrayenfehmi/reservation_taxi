@@ -8,8 +8,8 @@ export const es = {
     },
     booking_form: {
       title: "Reserve su viaje",
-      departure: "Lugar de salida",
-      destination: "Destino",
+      departure: "Lugar de salida ( dirección, estación, aeropuerto, etc. )",
+      destination: "Destino ( dirección, estación, aeropuerto, etc. )",
       date: "Fecha",
       time: "Hora",
       passengers: "Número de pasajeros",
