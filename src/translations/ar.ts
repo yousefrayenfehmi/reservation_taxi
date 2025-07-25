@@ -207,6 +207,7 @@ export const ar = {
   cgv: {
     title: "الشروط والأحكام العامة",
     last_updated: "آخر تحديث",
+    intro: "تقدم شركة www.easytaxiparis.fr خدمات النقل باستخدام مركبات النقل مع السائق (VTC)، حصرياً عند الحجز وبسعر محدد مسبقاً. شركة www.booktaxiparis مسجلة.",
     sections: {
       article_1: {
         title: "المادة 1 - الموضوع",

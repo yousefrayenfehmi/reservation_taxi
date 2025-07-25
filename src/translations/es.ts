@@ -200,6 +200,7 @@ export const es = {
   cgv: {
     title: "Términos y Condiciones",
     last_updated: "Última actualización",
+    intro: "La empresa www.easytaxiparis.fr proporciona servicios de transporte utilizando Vehículos de Transporte con Conductor (VTC), exclusivamente bajo reserva y a un precio previamente definido. La empresa www.booktaxiparis está registrada.",
     sections: {
       article_1: {
         title: "Artículo 1 - Objeto",
