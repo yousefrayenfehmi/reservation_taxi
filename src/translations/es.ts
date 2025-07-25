@@ -64,6 +64,13 @@ export const es = {
       loading: "Cargando viajes...",
       whatsapp_message: "Hola, me gustaría reservar un taxi\nRuta: {depart} → {arrivee}\nPrecio: {prix}\nPasajeros: {passagers}",
     },
+    booking: {
+      modal_title: "Finalizar su reserva",
+      date_label: "Fecha de salida",
+      time_label: "Hora de salida",
+      cancel: "Cancelar",
+      confirm: "Confirmar reserva",
+    },
   },
 
   whatsapp: {
