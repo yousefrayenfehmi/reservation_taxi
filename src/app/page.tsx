@@ -214,7 +214,7 @@ export default function Home() {
     <main className="min-h-screen">
       <WhatsAppButton />
       <div className="min-h-screen text-white px-4 py-8" style={{
-        backgroundImage: "url('/taxi.jpg')",
+        backgroundImage: "url('/parise.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
