@@ -553,6 +553,31 @@ export default function Home() {
               </div>
             )}
           </div>
+          <div className="mt-8 flex flex-col items-center">
+  <h3 className="text-2xl font-bold mb-4 text-gray-800">Principales gares desservies</h3>
+  <div className="flex flex-wrap justify-center gap-4">
+    <div className="flex items-center gap-2 bg-white rounded-xl shadow px-4 py-2">
+      <span className="text-blue-600 text-xl">🚉</span>
+      <span className="font-medium text-gray-800">Gare de Lyon</span>
+    </div>
+    <div className="flex items-center gap-2 bg-white rounded-xl shadow px-4 py-2">
+      <span className="text-blue-600 text-xl">🚉</span>
+      <span className="font-medium text-gray-800">Gare d’Austerlitz</span>
+    </div>
+    <div className="flex items-center gap-2 bg-white rounded-xl shadow px-4 py-2">
+      <span className="text-blue-600 text-xl">🚉</span>
+      <span className="font-medium text-gray-800">Gare du Nord</span>
+    </div>
+    <div className="flex items-center gap-2 bg-white rounded-xl shadow px-4 py-2">
+      <span className="text-blue-600 text-xl">🚉</span>
+      <span className="font-medium text-gray-800">Gare Montparnasse</span>
+    </div>
+    <div className="flex items-center gap-2 bg-white rounded-xl shadow px-4 py-2">
+      <span className="text-blue-600 text-xl">🚉</span>
+      <span className="font-medium text-gray-800">Gare de Bercy</span>
+    </div>
+  </div>
+</div>
         </div>
       </section>
 
