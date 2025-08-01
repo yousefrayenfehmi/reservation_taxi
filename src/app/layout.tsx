@@ -25,6 +25,21 @@ export default function RootLayout({
       <head>
         {gtmId && <GoogleTagManager gtmId={gtmId} />}
         {googleAdsId && <GoogleAdsEvents conversionId={googleAdsId} />}
+
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17368565564"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-17368565564');
+            `,
+          }}
+        />
+
+        <link rel="icon" href="logo_paris.png" />
       </head>
       <body className={inter.className}>
         <LanguageProvider>

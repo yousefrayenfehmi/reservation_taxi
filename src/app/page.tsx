@@ -6,7 +6,11 @@ import { useState, useRef, useEffect } from "react";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { api } from "@/services/api";
 
-
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
 const VEHICULES = [
   {
     key: 'economy',
@@ -199,6 +203,12 @@ export default function Home() {
     const whatsappUrl = `https://wa.me/33766145238?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      window.gtag('event', 'conversion', { 'send_to': 'AW-17368565564/RIVFCKK8__gaELyO_dlA' });
+    }
+  }, []);
 
   return (
     <main className="min-h-screen">
