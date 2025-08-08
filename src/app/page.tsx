@@ -417,23 +417,27 @@ export default function Home() {
             </div>
 
             {/* Ligne d'icônes cliquables */}
-            <div className="grid grid-cols-4 gap-4 relative">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
               {/* Icône Date */}
               <div className="relative">
                 <div 
-                  className="calendar-icon-main flex flex-col items-center p-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
+                  className="calendar-icon-main flex flex-col items-center p-4 md:p-4 py-6 md:py-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
                   onClick={handleCalendarIconClick}
                 >
-                  <div className="text-3xl mb-2">📅</div>
+                  <div className="text-4xl md:text-3xl mb-2">📅</div>
                   <div className="text-sm font-medium text-gray-700">Date</div>
-                  <div className="text-xs text-gray-500">
+                  <div className="text-xs text-gray-500 text-center">
                     {formData.date || 'Choisir'}
                   </div>
                 </div>
                 
                 {/* Calendrier */}
                 {showMobileCalendar && (
-                  <div className="mobile-calendar-main absolute top-full left-0 right-0 z-50 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-64">
+                  <>
+                    {/* Overlay sombre */}
+                    <div className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"></div>
+                    
+                    <div className="mobile-calendar-main absolute md:top-full md:left-0 md:right-0 fixed md:relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:transform-none z-50 mt-0 md:mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-80 md:w-64">
                     <div className="flex justify-between items-center mb-3">
                       <h3 className="text-lg font-semibold text-gray-800">Date</h3>
                       <button 
@@ -455,25 +459,30 @@ export default function Home() {
                       min={new Date().toISOString().split('T')[0]}
                     />
                   </div>
+                  </>
                 )}
               </div>
 
               {/* Icône Heure */}
               <div className="relative">
                 <div 
-                  className="time-icon-main flex flex-col items-center p-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
+                  className="time-icon-main flex flex-col items-center p-4 md:p-4 py-6 md:py-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
                   onClick={handleTimeIconClick}
                 >
-                  <div className="text-3xl mb-2">🕐</div>
+                  <div className="text-4xl md:text-3xl mb-2">🕐</div>
                   <div className="text-sm font-medium text-gray-700">Heure</div>
-                  <div className="text-xs text-gray-500">
+                  <div className="text-xs text-gray-500 text-center">
                     {formData.time || 'Choisir'}
                   </div>
                 </div>
                 
                 {/* Sélecteur d'heure */}
                 {showTimePicker && (
-                  <div className="time-picker-main absolute top-full left-0 right-0 z-50 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-64">
+                  <>
+                    {/* Overlay sombre */}
+                    <div className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"></div>
+                    
+                    <div className="time-picker-main absolute md:top-full md:left-0 md:right-0 fixed md:relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:transform-none z-50 mt-0 md:mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-80 md:w-64">
                     <div className="flex justify-between items-center mb-3">
                       <h3 className="text-lg font-semibold text-gray-800">Heure</h3>
                       <button 
@@ -494,25 +503,30 @@ export default function Home() {
                       className="w-full p-3 border border-gray-300 rounded-lg text-lg"
                     />
                   </div>
+                  </>
                 )}
               </div>
 
               {/* Icône Passagers */}
               <div className="relative">
                 <div 
-                  className="passenger-icon flex flex-col items-center p-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
+                  className="passenger-icon flex flex-col items-center p-4 md:p-4 py-6 md:py-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
                   onClick={handlePassengerIconClick}
                 >
-                  <div className="text-3xl mb-2">👥</div>
+                  <div className="text-4xl md:text-3xl mb-2">👥</div>
                   <div className="text-sm font-medium text-gray-700">Passagers</div>
-                  <div className="text-xs text-gray-500">
+                  <div className="text-xs text-gray-500 text-center">
                     {formData.passengers ? `${formData.passengers} pers.` : 'Choisir'}
                   </div>
                 </div>
                 
                 {/* Sélecteur de passagers */}
                 {showPassengerSelector && (
-                  <div className="passenger-selector absolute top-full left-0 right-0 z-50 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-80">
+                  <>
+                    {/* Overlay sombre */}
+                    <div className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"></div>
+                    
+                    <div className="passenger-selector absolute md:top-full md:left-0 md:right-0 fixed md:relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:transform-none z-50 mt-0 md:mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-80">
                     <div className="flex justify-between items-center mb-3">
                       <h3 className="text-lg font-semibold text-gray-800">Passagers</h3>
                       <button 
@@ -542,25 +556,30 @@ export default function Home() {
                       ))}
                     </div>
                   </div>
+                  </>
                 )}
               </div>
 
               {/* Icône Véhicule */}
               <div className="relative">
                 <div 
-                  className="vehicle-icon flex flex-col items-center p-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
+                  className="vehicle-icon flex flex-col items-center p-4 md:p-4 py-6 md:py-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
                   onClick={handleVehicleIconClick}
                 >
-                  <div className="text-3xl mb-2">🚗</div>
+                  <div className="text-4xl md:text-3xl mb-2">🚗</div>
                   <div className="text-sm font-medium text-gray-700">Véhicule</div>
-                  <div className="text-xs text-gray-500">
+                  <div className="text-xs text-gray-500 text-center">
                     {formData.vehicule ? t(`home.fleet.vehicles.${formData.vehicule}`) : 'Choisir'}
                   </div>
                 </div>
                 
                 {/* Sélecteur de véhicules */}
                 {showVehicleSelector && (
-                  <div className="vehicle-selector absolute top-full left-0 right-0 z-50 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-96">
+                  <>
+                    {/* Overlay sombre */}
+                    <div className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"></div>
+                    
+                    <div className="vehicle-selector absolute md:top-full md:left-0 md:right-0 fixed md:relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:transform-none z-50 mt-0 md:mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-80 md:w-96">
                     <div className="flex justify-between items-center mb-3">
                       <h3 className="text-lg font-semibold text-gray-800">Véhicule</h3>
                       <button 
@@ -602,6 +621,7 @@ export default function Home() {
                       ))}
                     </div>
                   </div>
+                  </>
                 )}
               </div>
             </div>
