@@ -417,16 +417,16 @@ export default function Home() {
             </div>
 
             {/* Ligne d'icônes cliquables */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
+            <div className="grid grid-cols-4 gap-2 md:gap-4 relative">
               {/* Icône Date */}
               <div className="relative">
                 <div 
-                  className="calendar-icon-main flex flex-col items-center p-4 md:p-4 py-6 md:py-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
+                  className="calendar-icon-main flex flex-col items-center p-2 md:p-4 py-3 md:py-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
                   onClick={handleCalendarIconClick}
                 >
-                  <div className="text-4xl md:text-3xl mb-2">📅</div>
-                  <div className="text-sm font-medium text-gray-700">Date</div>
-                  <div className="text-xs text-gray-500 text-center">
+                  <div className="text-2xl md:text-3xl mb-1 md:mb-2">📅</div>
+                  <div className="text-xs md:text-sm font-medium text-gray-700">Date</div>
+                  <div className="text-xs text-gray-500 text-center hidden md:block">
                     {formData.date || 'Choisir'}
                   </div>
                 </div>
@@ -466,12 +466,12 @@ export default function Home() {
               {/* Icône Heure */}
               <div className="relative">
                 <div 
-                  className="time-icon-main flex flex-col items-center p-4 md:p-4 py-6 md:py-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
+                  className="time-icon-main flex flex-col items-center p-2 md:p-4 py-3 md:py-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
                   onClick={handleTimeIconClick}
                 >
-                  <div className="text-4xl md:text-3xl mb-2">🕐</div>
-                  <div className="text-sm font-medium text-gray-700">Heure</div>
-                  <div className="text-xs text-gray-500 text-center">
+                  <div className="text-2xl md:text-3xl mb-1 md:mb-2">🕐</div>
+                  <div className="text-xs md:text-sm font-medium text-gray-700">Heure</div>
+                  <div className="text-xs text-gray-500 text-center hidden md:block">
                     {formData.time || 'Choisir'}
                   </div>
                 </div>
@@ -510,12 +510,12 @@ export default function Home() {
               {/* Icône Passagers */}
               <div className="relative">
                 <div 
-                  className="passenger-icon flex flex-col items-center p-4 md:p-4 py-6 md:py-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
+                  className="passenger-icon flex flex-col items-center p-2 md:p-4 py-3 md:py-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
                   onClick={handlePassengerIconClick}
                 >
-                  <div className="text-4xl md:text-3xl mb-2">👥</div>
-                  <div className="text-sm font-medium text-gray-700">Passagers</div>
-                  <div className="text-xs text-gray-500 text-center">
+                  <div className="text-2xl md:text-3xl mb-1 md:mb-2">👥</div>
+                  <div className="text-xs md:text-sm font-medium text-gray-700">Passagers</div>
+                  <div className="text-xs text-gray-500 text-center hidden md:block">
                     {formData.passengers ? `${formData.passengers} pers.` : 'Choisir'}
                   </div>
                 </div>
@@ -563,12 +563,12 @@ export default function Home() {
               {/* Icône Véhicule */}
               <div className="relative">
                 <div 
-                  className="vehicle-icon flex flex-col items-center p-4 md:p-4 py-6 md:py-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
+                  className="vehicle-icon flex flex-col items-center p-2 md:p-4 py-3 md:py-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
                   onClick={handleVehicleIconClick}
                 >
-                  <div className="text-4xl md:text-3xl mb-2">🚗</div>
-                  <div className="text-sm font-medium text-gray-700">Véhicule</div>
-                  <div className="text-xs text-gray-500 text-center">
+                  <div className="text-2xl md:text-3xl mb-1 md:mb-2">🚗</div>
+                  <div className="text-xs md:text-sm font-medium text-gray-700">Véhicule</div>
+                  <div className="text-xs text-gray-500 text-center hidden md:block">
                     {formData.vehicule ? t(`home.fleet.vehicles.${formData.vehicule}`) : 'Choisir'}
                   </div>
                 </div>
