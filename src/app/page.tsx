@@ -100,6 +100,12 @@ export default function Home() {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [showCookieBanner, setShowCookieBanner] = useState(false);
+  const [showMobileCalendar, setShowMobileCalendar] = useState(false);
+  const [showModalMobileCalendar, setShowModalMobileCalendar] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [showModalTimePicker, setShowModalTimePicker] = useState(false);
+  const [showPassengerSelector, setShowPassengerSelector] = useState(false);
+  const [showVehicleSelector, setShowVehicleSelector] = useState(false);
 
   // Fermer les menus si on clique en dehors
   useEffect(() => {
@@ -111,12 +117,71 @@ export default function Home() {
         setIsVehicleDropdownOpen(false);
       }
       
+      // Fermer le calendrier mobile si on clique en dehors
+      if (showMobileCalendar) {
+        const calendarElement = document.querySelector('.mobile-calendar-main');
+        const calendarIcon = document.querySelector('.calendar-icon-main');
+        if (calendarElement && !calendarElement.contains(event.target as Node) && 
+            calendarIcon && !calendarIcon.contains(event.target as Node)) {
+          setShowMobileCalendar(false);
+        }
+      }
+      
+      // Fermer le calendrier mobile de la modale si on clique en dehors
+      if (showModalMobileCalendar) {
+        const modalCalendarElement = document.querySelector('.mobile-calendar-modal');
+        const modalCalendarIcon = document.querySelector('.calendar-icon-modal');
+        if (modalCalendarElement && !modalCalendarElement.contains(event.target as Node) && 
+            modalCalendarIcon && !modalCalendarIcon.contains(event.target as Node)) {
+          setShowModalMobileCalendar(false);
+        }
+      }
+      
+      // Fermer le sélecteur d'heure si on clique en dehors
+      if (showTimePicker) {
+        const timePickerElement = document.querySelector('.time-picker-main');
+        const timeIcon = document.querySelector('.time-icon-main');
+        if (timePickerElement && !timePickerElement.contains(event.target as Node) && 
+            timeIcon && !timeIcon.contains(event.target as Node)) {
+          setShowTimePicker(false);
+        }
+      }
+      
+      // Fermer le sélecteur d'heure de la modale si on clique en dehors
+      if (showModalTimePicker) {
+        const modalTimePickerElement = document.querySelector('.time-picker-modal');
+        const modalTimeIcon = document.querySelector('.time-icon-modal');
+        if (modalTimePickerElement && !modalTimePickerElement.contains(event.target as Node) && 
+            modalTimeIcon && !modalTimeIcon.contains(event.target as Node)) {
+          setShowModalTimePicker(false);
+        }
+      }
+      
+      // Fermer le sélecteur de passagers si on clique en dehors
+      if (showPassengerSelector) {
+        const passengerSelector = document.querySelector('.passenger-selector');
+        const passengerIcon = document.querySelector('.passenger-icon');
+        if (passengerSelector && !passengerSelector.contains(event.target as Node) && 
+            passengerIcon && !passengerIcon.contains(event.target as Node)) {
+          setShowPassengerSelector(false);
+        }
+      }
+      
+      // Fermer le sélecteur de véhicules si on clique en dehors
+      if (showVehicleSelector) {
+        const vehicleSelector = document.querySelector('.vehicle-selector');
+        const vehicleIcon = document.querySelector('.vehicle-icon');
+        if (vehicleSelector && !vehicleSelector.contains(event.target as Node) && 
+            vehicleIcon && !vehicleIcon.contains(event.target as Node)) {
+          setShowVehicleSelector(false);
+        }
+      }
     }
 
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [showMobileCalendar, showModalMobileCalendar, showTimePicker, showModalTimePicker, showPassengerSelector, showVehicleSelector]);
 
   // Récupérer les voyages lors du chargement de la page
   useEffect(() => {
@@ -165,6 +230,34 @@ export default function Home() {
 
   const handleVehiculeChange = (value: string) => {
     setFormData(prev => ({ ...prev, vehicule: value }));
+  };
+
+  const handleCalendarIconClick = () => {
+    // Afficher le calendrier sur tous les appareils
+    setShowMobileCalendar(!showMobileCalendar);
+  };
+
+  const handleModalCalendarIconClick = () => {
+    // Afficher le calendrier sur tous les appareils
+    setShowModalMobileCalendar(!showModalMobileCalendar);
+  };
+
+  const handleTimeIconClick = () => {
+    // Afficher le sélecteur d'heure sur tous les appareils
+    setShowTimePicker(!showTimePicker);
+  };
+
+  const handleModalTimeIconClick = () => {
+    // Afficher le sélecteur d'heure sur tous les appareils pour la modale
+    setShowModalTimePicker(!showModalTimePicker);
+  };
+
+  const handlePassengerIconClick = () => {
+    setShowPassengerSelector(!showPassengerSelector);
+  };
+
+  const handleVehicleIconClick = () => {
+    setShowVehicleSelector(!showVehicleSelector);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -296,7 +389,7 @@ export default function Home() {
           <h2 className="text-4xl font-bold mb-6">{t('home.hero.title')}</h2>
           <p className="text-xl mb-12 text-center max-w-2xl">{t('home.hero.subtitle')}</p>
           <form onSubmit={handleSubmit} className="bg-white text-black p-6 rounded-lg shadow-lg w-full max-w-5xl space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-6">
               <div>
                
                 <input
@@ -323,118 +416,196 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Ligne d'icônes cliquables */}
+            <div className="grid grid-cols-4 gap-4 relative">
+              {/* Icône Date */}
               <div className="relative">
-                <input
-                  type="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleInputChange}
-                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500"
-                  required
-                />
-                <div className="absolute left-3 top-2.5 text-gray-400 pointer-events-none">
-                  📅
-                </div>
-              </div>
-              <div className="relative">
-                <input
-                  type="time"
-                  name="time"
-                  value={formData.time}
-                  onChange={handleInputChange}
-                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500"
-                  required
-                />
-                <div className="absolute left-3 top-2.5 text-gray-400 pointer-events-none">
-                  🕐
-                </div>
-              </div>
-              <div>
-                
-                <input
-                  placeholder={t('home.booking_form.passengers')}
-                  type="number"
-                  name="passengers"
-                  value={formData.passengers}
-                  onChange={handleInputChange}
-                  min="1"
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500"
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                {t('home.booking_form.vehicle_type')}
-              </label>
-              
-              {/* Liste déroulante personnalisée avec images */}
-              <div className="relative" ref={vehicleDropdownRef}>
-                <button
-                  type="button"
-                  onClick={() => setIsVehicleDropdownOpen(!isVehicleDropdownOpen)}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-yellow-500 bg-white text-left flex items-center justify-between"
+                <div 
+                  className="calendar-icon-main flex flex-col items-center p-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
+                  onClick={handleCalendarIconClick}
                 >
-                  <div className="flex items-center gap-2">
-                    {formData.vehicule ? (
-                      <>
-                        <div className="w-6 h-6 relative">
-                          <Image
-                            src={VEHICULES.find(v => v.key === formData.vehicule)?.img || ''}
-                            alt={t(`home.fleet.vehicles.${formData.vehicule}`)}
-                            fill
-                            className="object-contain"
-                          />
-                        </div>
-                        <span>{t(`home.fleet.vehicles.${formData.vehicule}`)}</span>
-                      </>
-                    ) : (
-                      <span className="text-gray-500">{t('home.booking_form.vehicle_type')}</span>
-                    )}
+                  <div className="text-3xl mb-2">📅</div>
+                  <div className="text-sm font-medium text-gray-700">Date</div>
+                  <div className="text-xs text-gray-500">
+                    {formData.date || 'Choisir'}
                   </div>
-                  <span className={`transform transition-transform duration-200 ${isVehicleDropdownOpen ? 'rotate-180' : ''}`}>
-                    ▼
-                  </span>
-                </button>
+                </div>
                 
-                {isVehicleDropdownOpen && (
-                  <div className="absolute z-50 w-full mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                    {VEHICULES.map(v => (
-                      <button
-                        key={v.key}
-                        type="button"
-                        onClick={() => {
-                          handleVehiculeChange(v.key);
-                          setIsVehicleDropdownOpen(false);
-                        }}
-                        className={`w-full px-4 py-3 text-left hover:bg-gray-50 flex items-center gap-3 border-b last:border-b-0 ${
-                          formData.vehicule === v.key ? 'bg-yellow-50 border-yellow-200' : ''
-                        }`}
+                {/* Calendrier */}
+                {showMobileCalendar && (
+                  <div className="mobile-calendar-main absolute top-full left-0 right-0 z-50 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-64">
+                    <div className="flex justify-between items-center mb-3">
+                      <h3 className="text-lg font-semibold text-gray-800">Date</h3>
+                      <button 
+                        onClick={() => setShowMobileCalendar(false)}
+                        className="text-gray-500 hover:text-gray-700 text-xl"
                       >
-                        <div className="w-8 h-8 relative flex-shrink-0">
-                          <Image
-                            src={v.img}
-                            alt={t(`home.fleet.vehicles.${v.key}`)}
-                            fill
-                            className="object-contain"
-                          />
-                        </div>
-                        <div>
-                          <div className="font-medium">
+                        ✕
+                      </button>
+                    </div>
+                    <input
+                      type="date"
+                      name="date"
+                      value={formData.date}
+                      onChange={(e) => {
+                        handleInputChange(e);
+                        setShowMobileCalendar(false);
+                      }}
+                      className="w-full p-3 border border-gray-300 rounded-lg text-lg"
+                      min={new Date().toISOString().split('T')[0]}
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Icône Heure */}
+              <div className="relative">
+                <div 
+                  className="time-icon-main flex flex-col items-center p-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
+                  onClick={handleTimeIconClick}
+                >
+                  <div className="text-3xl mb-2">🕐</div>
+                  <div className="text-sm font-medium text-gray-700">Heure</div>
+                  <div className="text-xs text-gray-500">
+                    {formData.time || 'Choisir'}
+                  </div>
+                </div>
+                
+                {/* Sélecteur d'heure */}
+                {showTimePicker && (
+                  <div className="time-picker-main absolute top-full left-0 right-0 z-50 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-64">
+                    <div className="flex justify-between items-center mb-3">
+                      <h3 className="text-lg font-semibold text-gray-800">Heure</h3>
+                      <button 
+                        onClick={() => setShowTimePicker(false)}
+                        className="text-gray-500 hover:text-gray-700 text-xl"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    <input
+                      type="time"
+                      name="time"
+                      value={formData.time}
+                      onChange={(e) => {
+                        handleInputChange(e);
+                        setShowTimePicker(false);
+                      }}
+                      className="w-full p-3 border border-gray-300 rounded-lg text-lg"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Icône Passagers */}
+              <div className="relative">
+                <div 
+                  className="passenger-icon flex flex-col items-center p-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
+                  onClick={handlePassengerIconClick}
+                >
+                  <div className="text-3xl mb-2">👥</div>
+                  <div className="text-sm font-medium text-gray-700">Passagers</div>
+                  <div className="text-xs text-gray-500">
+                    {formData.passengers ? `${formData.passengers} pers.` : 'Choisir'}
+                  </div>
+                </div>
+                
+                {/* Sélecteur de passagers */}
+                {showPassengerSelector && (
+                  <div className="passenger-selector absolute top-full left-0 right-0 z-50 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-80">
+                    <div className="flex justify-between items-center mb-3">
+                      <h3 className="text-lg font-semibold text-gray-800">Passagers</h3>
+                      <button 
+                        onClick={() => setShowPassengerSelector(false)}
+                        className="text-gray-500 hover:text-gray-700 text-xl"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-4 gap-3">
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 16].map((num) => (
+                        <button
+                          key={num}
+                          onClick={() => {
+                            setFormData(prev => ({ ...prev, passengers: num.toString() }));
+                            setShowPassengerSelector(false);
+                          }}
+                          className={`p-3 rounded-lg border text-center transition-all ${
+                            formData.passengers === num.toString()
+                              ? 'bg-yellow-500 text-white border-yellow-500'
+                              : 'bg-white text-gray-700 border-gray-300 hover:border-yellow-500 hover:bg-yellow-50'
+                          }`}
+                        >
+                          <div className="text-2xl mb-1">👥</div>
+                          <div className="text-sm font-medium">{num}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Icône Véhicule */}
+              <div className="relative">
+                <div 
+                  className="vehicle-icon flex flex-col items-center p-4 border rounded-lg cursor-pointer hover:border-yellow-500 hover:bg-yellow-50 transition-all"
+                  onClick={handleVehicleIconClick}
+                >
+                  <div className="text-3xl mb-2">🚗</div>
+                  <div className="text-sm font-medium text-gray-700">Véhicule</div>
+                  <div className="text-xs text-gray-500">
+                    {formData.vehicule ? t(`home.fleet.vehicles.${formData.vehicule}`) : 'Choisir'}
+                  </div>
+                </div>
+                
+                {/* Sélecteur de véhicules */}
+                {showVehicleSelector && (
+                  <div className="vehicle-selector absolute top-full left-0 right-0 z-50 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-96">
+                    <div className="flex justify-between items-center mb-3">
+                      <h3 className="text-lg font-semibold text-gray-800">Véhicule</h3>
+                      <button 
+                        onClick={() => setShowVehicleSelector(false)}
+                        className="text-gray-500 hover:text-gray-700 text-xl"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      {VEHICULES.map(v => (
+                        <button
+                          key={v.key}
+                          onClick={() => {
+                            handleVehiculeChange(v.key);
+                            setShowVehicleSelector(false);
+                          }}
+                          className={`p-3 rounded-lg border text-center transition-all ${
+                            formData.vehicule === v.key
+                              ? 'bg-yellow-500 text-white border-yellow-500'
+                              : 'bg-white text-gray-700 border-gray-300 hover:border-yellow-500 hover:bg-yellow-50'
+                          }`}
+                        >
+                          <div className="w-12 h-12 relative mx-auto mb-2">
+                            <Image
+                              src={v.img}
+                              alt={t(`home.fleet.vehicles.${v.key}`)}
+                              fill
+                              className="object-contain"
+                            />
+                          </div>
+                          <div className="font-medium text-xs mb-1">
                             {t(`home.fleet.vehicles.${v.key}`)}
                           </div>
-                          <div className="text-xs text-gray-500">
-                            {v.seats} {t('home.fleet.seats')} · {v.luggage} {t('home.fleet.luggage')}
+                          <div className="text-xs opacity-80">
+                            {v.seats} places
                           </div>
-                        </div>
-                      </button>
-                    ))}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
             </div>
+
 
             <div className="text-center">
               <button
@@ -682,7 +853,7 @@ export default function Home() {
 
             <div className="space-y-4">
               {/* Champ Date */}
-              <div>
+              <div className="relative">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {t('home.booking.date_label')}
                 </label>
@@ -691,13 +862,44 @@ export default function Home() {
                   value={selectedDate}
                   onChange={(e) => setSelectedDate(e.target.value)}
                   min={new Date().toISOString().split('T')[0]}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   required
                 />
+                <div 
+                  className="calendar-icon-modal absolute left-3 top-10 text-gray-400 cursor-pointer hover:text-gray-600 transition-colors"
+                  onClick={handleModalCalendarIconClick}
+                >
+                  📅
+                </div>
+                
+                {/* Calendrier pour la modale */}
+                {showModalMobileCalendar && (
+                  <div className="mobile-calendar-modal absolute top-full left-0 right-0 z-50 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4">
+                    <div className="flex justify-between items-center mb-3">
+                      <h3 className="text-lg font-semibold text-gray-800">Sélectionner une date</h3>
+                      <button 
+                        onClick={() => setShowModalMobileCalendar(false)}
+                        className="text-gray-500 hover:text-gray-700 text-xl"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    <input
+                      type="date"
+                      value={selectedDate}
+                      onChange={(e) => {
+                        setSelectedDate(e.target.value);
+                        setShowModalMobileCalendar(false);
+                      }}
+                      className="w-full p-3 border border-gray-300 rounded-lg text-lg"
+                      min={new Date().toISOString().split('T')[0]}
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Champ Heure */}
-              <div>
+              <div className="relative">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {t('home.booking.time_label')}
                 </label>
@@ -705,9 +907,39 @@ export default function Home() {
                   type="time"
                   value={selectedTime}
                   onChange={(e) => setSelectedTime(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   required
                 />
+                <div 
+                  className="time-icon-modal absolute left-3 top-10 text-gray-400 cursor-pointer hover:text-gray-600 transition-colors"
+                  onClick={handleModalTimeIconClick}
+                >
+                  🕐
+                </div>
+                
+                {/* Sélecteur d'heure pour la modale */}
+                {showModalTimePicker && (
+                  <div className="time-picker-modal absolute top-full left-0 right-0 z-50 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4">
+                    <div className="flex justify-between items-center mb-3">
+                      <h3 className="text-lg font-semibold text-gray-800">Sélectionner une heure</h3>
+                      <button 
+                        onClick={() => setShowModalTimePicker(false)}
+                        className="text-gray-500 hover:text-gray-700 text-xl"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    <input
+                      type="time"
+                      value={selectedTime}
+                      onChange={(e) => {
+                        setSelectedTime(e.target.value);
+                        setShowModalTimePicker(false);
+                      }}
+                      className="w-full p-3 border border-gray-300 rounded-lg text-lg"
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
